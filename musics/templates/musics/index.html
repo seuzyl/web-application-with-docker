@@ -1,0 +1,104 @@
+{% load ststic %}
+<DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+	<script src="http://libs.baidu.com/jquery.min.js"></script>
+	<script>
+	    function loadXMLDoc(){
+	    	let xmlHttp = new XMLHttpRequest();
+	    	xmlHttp.onreadystatechange = function(){
+	    		console.log("xmlHttp.readyState=" + xmlHttp.readyState);
+	    		console.log("xmlHttp.ststus=" + xmlHttp.status);
+	    		if(xmlHttp.readyState===4&&xmlHttp.status){
+	    			console.log("xmlHttp.response=" + xmlHttp.response);
+	    			console.log(JSON.parse(xmlHttp.responseText));
+	    			loadTableData(JSON.parse(xmlHttp.responseText));
+	    		}
+	    	}
+	    	xmlHttp.open("GET", "/musics/api", true);
+	    	xmlHttp.send();
+	    }
+
+	    function loadTableData(data){
+	    	let innerHTML = '<div class="col-md-2"></div>'
+	    	                +'<div class="col-md-8">'
+	    	                +'<table class="table table-hover">'+'<tr>'
+	    	                +'<th>SONG</th><th>SINGER</th><th>STYLE</th><th>CREATED</th>'+'</tr>';
+	    	for(let item of data){
+	    		innerHTML += '<tr><td>'+item.song+'</td><td>'+item.singer+'</td><td>'
+	    		            +item.style+'</td><td>'+item.created+'</td></tr>';
+	    	}
+	    	document.getElementById("tiv_tb").innerHTML=innerHTML+'</table>'+'</div>'
+	    	                                          +'<div class="col-md-2"></div>';	
+	    }
+	</script>
+</head>
+<body onload="loadXMLDoc()">
+	<button style="display:none;" type="button" onclick="loadXMLDoc()">加载数据</button>
+	<div class="container">
+		<div class="row">
+			<div clas="col-md-2"></div>
+			<div class="col-md-8">
+				<button class="btn btn-default" id="btnOperate" type="submit">添加音乐</button>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+		<div id="form_block" class="row" style="...">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<form class="form-inline">
+					<div class="form-group">
+						<label class="sr-only" for="song">song</label>
+						<input type="text" class="form-control" name="song" id="song" placeholder="song">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="singer">singer</label>
+						<input type="text" class="form-control" name="singer" id="singer" placeholder="singer">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="song">style</label>
+						<input type="text" class="form-control" name="style" id="style" placeholder="style">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="creatd">created</label>
+						<input type="text" class="form-control" name="created" id="created" placeholder="created">
+					</div> 
+					<input type="button" id="btn_pro" class="btn btn-default" value="配置"></input>
+				</form>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+		<div class="row" id="tiv_tb" style="...">
+		</div>
+	</div>
+</body>
+<script>
+$(document).ready(function(){
+	$("#btnOperate").click(function(){
+		$("form_block").toggle();
+	});
+	$("btn_pro").click(function(){
+		var data='{"song":"'+$("#song").val()+'","singer":"'+$("#singer").val()+'",
+		         "style":"'+$("#style").val()+'","created":"'+$("#created").val()+'"}';
+		console.log(data);
+		console.log(JSON.parse(data));
+		$.ajax({
+			type: "POST",
+			url: "./api",
+			contentType: "application/json; charset=utf-8",
+			data: data,
+			dataType: "json",
+			success: function(){
+				window.location.reload();
+				alert("add song success")
+			},
+			error: function(){
+				alert("add song failed")
+			}
+		});
+	});
+});
+</script>
+</html>
