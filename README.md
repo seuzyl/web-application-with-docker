@@ -17,6 +17,7 @@ deploy web application with docker and other open source components
 
 
 docker知识简介
+
 相比于传统的在虚机上部署业务，docker的优势就是轻量级，比如上面提到的python基础镜像只有几十m，部署完整个业务可能只有不到1G的大小。
 传统的虚机中，即使只部署一个很小的业务，也需要一个完整的操作系统。即使基础镜像为centos这种，也会比真正的centos操作系统小很多。
 轻量级就会使启动速度变快。
@@ -25,6 +26,7 @@ docker知识简介
 pull下来然后执行一行docker run命令就可以了，因为你的代码(通过add或者copy的方式)和依赖的包(通过pip install的方式)都在镜像中了。
 
 restframework简介
+
 首先介绍下rest，rest是一种规范，一种面向资源的url设计规范。比如本例中的接口为/musics（rest中一般为复数形式），get/post/update/delete方法
 都是调同一接口，区别是方法。在musics/views.py中通过类视图MusicView，分别复写get方法和post方法来完成客户端的get和post请求。
 
