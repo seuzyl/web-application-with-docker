@@ -6,9 +6,9 @@ deploy web application with docker and other open source components
 又在该容器中通过pip install的方式安装了django和restframework；pg数据库部署在一个单独的容器中。客户端使用了jquery和bootstrap。
 
 部署步骤：
-1  安装docker和docker-compose，docker pull python/postgresql拉取python和postgresql两个镜像。
-2  安装django，django-admin startproject mysite启动一个项目，完成代码的编写。
-3  编写Dockerfile和yaml文件，其中Dockerfile是为了在python基础镜像上再构建新的镜像，yaml文件是将两个镜像组合成一个完整的web应用。
+1  安装docker和docker-compose，docker pull python/postgresql拉取python和postgresql两个镜像。\n
+2  安装django，django-admin startproject mysite启动一个项目，完成代码的编写。\n
+3  编写Dockerfile和yaml文件，其中Dockerfile是为了在python基础镜像上再构建新的镜像，yaml文件是将两个镜像组合成一个完整的web应用。\n
 4  docker-compose up启动应用，访问客户端。
 
 
