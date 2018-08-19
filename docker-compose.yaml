@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+    db:
+        image: public-docker-virtual.artnj.zte.com.cn/postgres
+        environment:
+            POSTGRES_PASSWORD: qwe123
+        ports:
+            - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data/
+    web:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        restart: always
+        volumes:
+            - mysite_data:/app
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+
+volumes:
+    mysite_data:
+    pgdata:
