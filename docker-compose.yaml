@@ -9,14 +9,26 @@ services:
             - "5432:5432"
         volumes:
             - pgdata:/var/lib/postgresql/data/
+
+    nginx:
+        build: ./nginx
+        restart: always
+        ports:
+            - "8080:80"
+        volumes:
+            - ./nginx_data/:/app/nginx_data
+            - ./log:/var/log/nginx
+        depends_on:
+            - web
+
     web:
         build: .
-        command: python manage.py runserver 0.0.0.0:8000
+        command: uwsgi --ini uwsgi.ini
         restart: always
         volumes:
-            - mysite_data:/app
+            - ./web_data:/app/web_data
         ports:
-            - "8000:8000"
+            - "8001:8001"
         depends_on:
             - db
 
