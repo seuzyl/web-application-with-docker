@@ -30,8 +30,9 @@ restframework简介:
 首先介绍下rest，rest是一种规范，一种面向资源的url设计规范。比如本例中的接口为/musics（rest中一般为复数形式），get/post/update/delete方法
 都是调同一接口，区别是方法。在musics/views.py中通过类视图MusicView，分别复写get方法和post方法来完成客户端的get和post请求。
 
+已经使用nginx和uwsgi拉起服务。
+
 本周目标：
 
-1  新加一个nginx容器，做负载均衡（虽然并没有人访问）和静态资源（图片/js文件/css文件等）处理。
-
-2  使用uwsgi拉起django，而不是通过python manage.py runserver 0.0.0.0:8000这种方式。
+完成一个免费天气API的业务，由于现在免费的气象API都有调用次数的限制（每天），所以计划将查询到的天气放在数据库中，如果对天气预报时间要求不是
+很高的话，可以从本API中获取到。
